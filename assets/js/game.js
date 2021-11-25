@@ -20,7 +20,7 @@ var fight = function(enemy) {
 
         // if yes (true), leave fight 
         if (confirmSkip) {
-            window.alert(playerName + ' has decided to skip this fight. Goodbye!');
+            window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
             // subtract money from playerMoney for skipping
             playerInfo.money = Math.max(0, playerInfo.money - 10);
             console.log("playerInfo.money", playerInfo.money);
@@ -31,7 +31,7 @@ var fight = function(enemy) {
 // generate random damage value based on player's attack power
 var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
-    enemyHealth = Math.max(0, enemyHealth - damage);
+    enemyHealth = Math.max(0, enemy.health - damage);
     console.log(
         playerInfo.name + ' attacked ' + enemy.name + ' . ' + enemy.name + ' now has ' + enemy.health + ' health remaining. '
     );
@@ -50,7 +50,7 @@ if (enemy.health <= 0) {
 }
 
 // remove player's health by subtracting the amount set in the enemy.attack variable
-var damage = randomNumber(enemyAttack - 3, enemy.attack);
+var damage = randomNumber(enemy.attack - 3, enemy.attack);
 
 playerInfo.health = Math.max(0, playerInfo.health - damage);
 
@@ -64,7 +64,7 @@ if (playerInfo.health <= 0) {
     // leave while() loop if player is dead
     break;
 }   else {
-    window.alert(playeInfo.name + ' still has ' + playerInfo.health + ' health left.');
+    window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
     }
     }
 };
@@ -87,7 +87,7 @@ for (var i = 0; i < enemyInfo.length; i++) {
         // set health for picked enemy
         pickedEnemyObj.health = randomNumber(40, 60);
 
-        // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
+        // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemy parameter
         fight(pickedEnemyObj);
 
         // if player is still alive and we're not at the least enemy in the array
@@ -175,9 +175,20 @@ var shop = function() {
 
 /*GAME INFORMATION / VARIABLES */
 
+// function to set name
+var getPlayerName = function() {
+    var name = "";
+
+while (name === "" || name === null) {
+    name = prompt("What is your robot's name?");
+}
+
+    console.log("Your robot's name is " + name);
+    return name;
+};
 // player information
     var playerInfo = {
-        name: window.prompt("What is your robot's name?"),
+        name: getPlayerName(),
         health: 100,
         attack: 10,
         money: 10,
